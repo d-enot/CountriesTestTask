@@ -23,6 +23,12 @@ android {
         }
     }
 
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -52,6 +58,10 @@ android {
     }
 }
 
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
 dependencies {
 
     implementation(libs.androidx.core.ktx)
@@ -73,10 +83,12 @@ dependencies {
     implementation(libs.coil)
     implementation(libs.coil.compose)
     testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
+    testRuntimeOnly(libs.junit.engine)
+    testImplementation(libs.mokk)
+    testImplementation(libs.jupiter)
+    testImplementation(libs.coroutine.test)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
-    androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }
